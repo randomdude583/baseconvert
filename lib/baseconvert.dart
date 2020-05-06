@@ -5,25 +5,49 @@ library baseconvert;
 
 import 'dart:math';
 
-List _stringToList(String string) {
-  //Convert string to List
-  List list = [];
-  for (int i = 0; i < string.length; i++) {
-    list.add(int.tryParse(string[i]) ?? string[i]);
-  }
-  return list;
-}
+List representAsList(String string) {
+  /*
+  Represent a number-string in the form of a tuple of digits.
+  "868.0F" -> (8, 6, 8, '.', 0, 15)
+  Args:
+      string - Number represented as a string of digits.
+  Returns:
+      Number represented as an iterable container of digits*/
 
-String _listToString(List list) {
-  // Convert binary string to a list
-  String output = "";
-  list.forEach((i) {
-    output += i.toString();
-  });
+  List keep = [".", "[", "]"];
+  List output = [];
+  for (int i = 0; i < string.length; i++) {
+    if (!keep.contains(string[i])) {
+      output.add(_strDigitToInt(string[i]));
+    } else {
+      output.add(string[i]);
+    }
+  }
   return output;
 }
 
-int digit(int decimal, int digit, [int inputBase = 10]) {
+String representAsString(List list) {
+  /*
+  Represent a number in the form of a string.
+  (8, 6, 8, '.', 0, 15) -> "868.0F"
+  Args:
+      iterable - Number represented as an iterable container of digits.
+  Returns:
+      Number represented as a string of digits.*/
+
+  List keep = [".", "[", "]"];
+  String output = "";
+  for (dynamic i in list) {
+    if (!keep.contains(i)) {
+      output += _intToStrDigit(i);
+    } else {
+      output += i;
+    }
+  }
+  return output;
+}
+
+int _digit(int decimal, int digit, [int inputBase = 10]) {
   /*
   Find the value of an integer at a specific digit when represented in a
   particular base.
@@ -45,7 +69,7 @@ int digit(int decimal, int digit, [int inputBase = 10]) {
   }
 }
 
-int digits(int number, [int base = 10]) {
+int _digits(int number, [int base = 10]) {
   /*
   Determines the number of digits of a number in a specific base.
   Args:
@@ -64,7 +88,7 @@ int digits(int number, [int base = 10]) {
   return digits;
 }
 
-List<List> integerFractionalParts(List number) {
+List<List> _integerFractionalParts(List number) {
   /*
   Returns a List of the integer and fractional parts of a number.
   Args:
@@ -73,13 +97,13 @@ List<List> integerFractionalParts(List number) {
   Returns:
       (integer_part, fractional_part): List.*/
 
-  int radix_point = number.indexOf(".");
-  List integer_part = number.sublist(0, radix_point);
-  List fractional_part = number.sublist(radix_point);
-  return ([integer_part, fractional_part]);
+  int radixPoint = number.indexOf(".");
+  List integerPart = number.sublist(0, radixPoint);
+  List fractionalPart = number.sublist(radixPoint);
+  return ([integerPart, fractionalPart]);
 }
 
-List fromBase10(int decimal, [outputBase = 10]) {
+List _fromBase10(int decimal, [outputBase = 10]) {
   /*
   Converts a decimal integer to a specific base.
   Args:
@@ -94,12 +118,12 @@ List fromBase10(int decimal, [outputBase = 10]) {
   if (outputBase == 1) {
     return List.generate(outputBase, (number) => 1);
   }
-  int length = digits(decimal, outputBase);
-  List converted = List.generate(length, (i) => digit(decimal, i, outputBase));
+  int length = _digits(decimal, outputBase);
+  List converted = List.generate(length, (i) => _digit(decimal, i, outputBase));
   return converted.reversed.toList();
 }
 
-int toBase10(List n, int inputBase) {
+int _toBase10(List n, int inputBase) {
   /*
   Converts an integer in any base into it's decimal representation.
   Args:
@@ -115,7 +139,7 @@ int toBase10(List n, int inputBase) {
   return sum;
 }
 
-List integerBase(List number, [int inputBase = 10, int outputBase = 10]) {
+List _integerBase(List number, [int inputBase = 10, int outputBase = 10]) {
   /*
   Converts the integer part of a number from one base to another.
   Args:
@@ -127,17 +151,17 @@ List integerBase(List number, [int inputBase = 10, int outputBase = 10]) {
   Returns:
       A List of digits.*/
 
-  return fromBase10(toBase10(number, inputBase), outputBase);
+  return _fromBase10(_toBase10(number, inputBase), outputBase);
 }
 
-List fractionalBase(List fractionalPart,
+List _fractionalBase(List fractionalPart,
     [int inputBase = 10, int outputBase = 10, int maxDepth = 100]) {
   /*
   Convert the fractional part of a number from any base to any base.
   Args:
       fractional_part(iterable container): The fractional part of a number in
           the following form:    ( ".", int, int, int, ...)
-      input_base(int): The base to convert from (defualt 10).
+      input_base(int): The base to convert from (default 10).
       output_base(int): The base to convert to (default 10).
       max_depth(int): The maximum number of decimal digits to output.
   Returns:
@@ -167,7 +191,7 @@ List fractionalBase(List fractionalPart,
   return digits;
 }
 
-List truncate(List n) {
+List _truncate(List n) {
   /*
   Removes trailing zeros.
   Args:
@@ -191,7 +215,7 @@ List truncate(List n) {
   }
 }
 
-int strDigitToInt(String chr) {
+int _strDigitToInt(String chr) {
   /*
   Converts a String character to a decimal number.
   Where "A"->10, "B"->11, "C"->12, ...etc
@@ -207,24 +231,23 @@ int strDigitToInt(String chr) {
     n = int.parse(chr);
   } else {
     n = chr.codeUnits[0];
-  }
-
-  //A-Z
-  if (n < 91) {
-    n -= 55;
-  } else {
-    //a-z or higher
-    n -= 61;
+    //A-Z
+    if (n < 91) {
+      n -= 55;
+    } else {
+      //a-z or higher
+      n -= 61;
+    }
   }
   return n;
 }
 
-String intToStrDigit(int n) {
+String _intToStrDigit(int n) {
   /*
   Converts a positive integer, to a single string character.
   Where: 9 -> "9", 10 -> "A", 11 -> "B", 12 -> "C", ...etc
   Args:
-      n(int): A positve integer number.
+      n(int): A positive integer number.
   Returns:
       The character representation of the input digit of value n (str).*/
 
@@ -234,7 +257,7 @@ String intToStrDigit(int n) {
   }
   //A-Z
   else if (n < 36) {
-    return String.fromCharCode(n);
+    return String.fromCharCode(n + 55);
   }
   //a-z or higher
   else {
@@ -242,7 +265,7 @@ String intToStrDigit(int n) {
   }
 }
 
-findRecurring(List number, {int minRepeat = 5}) {
+List _findRecurring(List number, {int minRepeat = 5}) {
   /*
   Attempts to find repeating digits in the fractional component of a number.
   Args:
@@ -259,9 +282,9 @@ findRecurring(List number, {int minRepeat = 5}) {
   if (!number.contains(".") || minRepeat < 1) {
     return number;
   }
-  //Seperate the number into integer and fractional parts.
-  List integerPart = integerFractionalParts(number)[0];
-  List fractionalPart = integerFractionalParts(number)[1];
+  //Separate the number into integer and fractional parts.
+  List integerPart = _integerFractionalParts(number)[0];
+  List fractionalPart = _integerFractionalParts(number)[1];
   //Reverse fractional part to get a sequence.
   List sequence = fractionalPart.reversed.toList();
   //Initialize counters
@@ -310,17 +333,17 @@ findRecurring(List number, {int minRepeat = 5}) {
   //Ensure we are at the start of the pattern.
   List patternTemp = pattern;
   for (int i = 0; i < pattern.length; i++) {
-    if (number[number.length - 1] == digit) {
+    if (number[number.length - 1] == _digit) {
       number = number.sublist(0, number.length - 2);
       patternTemp = patternTemp.sublist(1) + (patternTemp[0]);
     }
-    pattern = patternTemp;
-    //Return the number with the recurring pattern enclosed with '[' and ']'
-    return number + ["["] + pattern.reversed.toList() + ["]"];
   }
+  pattern = patternTemp;
+  //Return the number with the recurring pattern enclosed with '[' and ']'
+  return number + ["["] + pattern.reversed.toList() + ["]"];
 }
 
-expandRecurring(List number, {int repeat = 5}) {
+List _expandRecurring(List number, {int repeat = 5}) {
   /*
   Expands a recurring pattern within a number.
   Args:
@@ -342,7 +365,7 @@ expandRecurring(List number, {int repeat = 5}) {
   return number;
 }
 
-bool checkValid(List number, [int inputBase = 10]) {
+bool _checkValid(List number, [int inputBase = 10]) {
   /*
   Checks if there is an invalid digit in the input number.
   Args:
@@ -377,11 +400,11 @@ base(dynamic number,
   Converts a number from any base to any another.
   Args:
       number(List|String|int): The number to convert.
-      inputBase(int): The base to convert from (defualt 10).
+      inputBase(int): The base to convert from (default 10).
       outputBase(int): The base to convert to (default 10).
-      maxDepth(int): The maximum number of fractional digits (defult 10).
+      maxDepth(int): The maximum number of fractional digits (default 10).
       string(bool): If true output will be in String representation,
-          if false output will be in List representation (defult false).
+          if false output will be in List representation (default false).
       recurring(bool): Attempt to find repeating digits in the fractional
           part of a number. Repeated digits will be enclosed with "[" and "]"
           (default true).
@@ -398,10 +421,10 @@ base(dynamic number,
     number = number.toString();
   }
   if (number is String) {
-    number = _stringToList(number);
+    number = representAsList(number);
   }
   //Check that the number is valid for the input base
-  if (!checkValid(number, inputBase)) {
+  if (!_checkValid(number, inputBase)) {
     throw Exception("Invalid!");
   }
   //Deal with base-1 special case
@@ -409,32 +432,32 @@ base(dynamic number,
     number = List.generate(number.length, (number) => 1);
   }
   //Expand any recurring digits
-  number = expandRecurring(number, repeat: 5);
+  number = _expandRecurring(number, repeat: 5);
   //Convert a fractional number
   if (number.contains(".")) {
     int radixPoint = number.indexOf(".");
     List integerPart = number.sublist(0, radixPoint);
     List fractionalPart = number.sublist(radixPoint);
-    integerPart = integerBase(integerPart, inputBase, outputBase);
+    integerPart = _integerBase(integerPart, inputBase, outputBase);
     fractionalPart =
-        fractionalBase(fractionalPart, inputBase, outputBase, maxDepth);
+        _fractionalBase(fractionalPart, inputBase, outputBase, maxDepth);
 
     number = integerPart + fractionalPart;
-    number = truncate(number);
+    number = _truncate(number);
   }
 
   //Convert an integer number
   else {
-    number = integerBase(number, inputBase, outputBase);
+    number = _integerBase(number, inputBase, outputBase);
   }
 
   if (recurring) {
-    number = findRecurring(number, minRepeat: 2);
+    number = _findRecurring(number, minRepeat: 2);
   }
 
   //Return the converted number as a string or list
   if (string) {
-    return _listToString(number);
+    return representAsString(number);
   } else {
     return number;
   }
@@ -447,16 +470,19 @@ class BaseConverter {
   final bool string;
   final bool recurring;
 
-  BaseConverter({
-    this.inputBase = 10,
-    this.outputBase = 10,
-    this.maxDepth = 10,
-    this.string = false,
-    this.recurring = true});
+  BaseConverter(
+      {this.inputBase = 10,
+      this.outputBase = 10,
+      this.maxDepth = 10,
+      this.string = false,
+      this.recurring = true});
 
-  convert(dynamic number){
-    return base(number, inputBase: inputBase, outputBase: outputBase,
-        maxDepth: maxDepth, string: string, recurring: recurring);
+  convert(dynamic number) {
+    return base(number,
+        inputBase: inputBase,
+        outputBase: outputBase,
+        maxDepth: maxDepth,
+        string: string,
+        recurring: recurring);
   }
-
 }
