@@ -6,6 +6,7 @@ Convert any rational number, from any (positive integer) base, to any (positive 
 - Recurring/repeating fractional digits.
 - Input numbers as tuple or string or number.
 - Output numbers as tuple or string.
+
 MIT License (MIT) Copyright (c) 2020 Alex Collette
 
 [Github](https://github.com/randomdude583/baseconvert "GitHub Repo")
