@@ -26,22 +26,22 @@ void main() {
 
   group('base()', () {
     test("B2_B3", () {
-      expect(base(B2, inputBase: 2, outputBase: 3), B3);
+      expect(base(B2, inBase: 2, outBase: 3), B3);
     });
     test("B3_B4", () {
-      expect(base(B3, inputBase: 3, outputBase: 4), B4);
+      expect(base(B3, inBase: 3, outBase: 4), B4);
     });
     test("B4_B5", () {
-      expect(base(B4, inputBase: 4, outputBase: 5), B5);
+      expect(base(B4, inBase: 4, outBase: 5), B5);
     });
     test("B5_B6", () {
-      expect(base(B5, inputBase: 5, outputBase: 6), B6);
+      expect(base(B5, inBase: 5, outBase: 6), B6);
     });
   });
 
   group('BaseConverter()', () {
     group("2_4", () {
-      BaseConverter b = new BaseConverter(inputBase: 2, outputBase: 4);
+      BaseConverter b = new BaseConverter(inBase: 2, outBase: 4);
       test("", () {
         expect(b.convert([0, 1, 0, 1, 0, 1, 0, 0]), [1, 1, 1, 0]);
       });
