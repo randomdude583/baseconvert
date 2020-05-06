@@ -1,3 +1,3 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.1] - 5/6/2020
 
-* TODO: Describe initial release.
+* Initialized project and implemented methods for converting numbers between bases.

@@ -1,7 +1,7 @@
 name: baseconvert
 description: Convert any rational number from any (positive integer)
   base to any (positive integer) base. Output numbers as List or String.
-version: 0.0.1
+version: 1.0.1
 author: Alex Collette
 homepage: hiddenquarter.com
 
