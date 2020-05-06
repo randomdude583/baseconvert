@@ -1,4 +1,6 @@
 # baseconvert
+[![pub package](https://img.shields.io/pub/v/baseconvert.svg)](https://pub.dev/packages/baseconvert)
+
 Convert any rational number, from any (positive integer) base, to any (positive integer) base. Output numbers as tuple or string.
 - Any rational number
 - Arbitrary precision
