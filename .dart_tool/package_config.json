@@ -68,12 +68,6 @@
       "languageVersion": "2.1"
     },
     {
-      "name": "flutter",
-      "rootUri": "file:///C:/Users/rando/Programming/flutter/flutter/packages/flutter",
-      "packageUri": "lib/",
-      "languageVersion": "2.2"
-    },
-    {
       "name": "glob",
       "rootUri": "file:///C:/Users/rando/Programming/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/glob-1.2.0",
       "packageUri": "lib/",
@@ -218,12 +212,6 @@
       "languageVersion": "2.0"
     },
     {
-      "name": "sky_engine",
-      "rootUri": "file:///C:/Users/rando/Programming/flutter/flutter/bin/cache/pkg/sky_engine",
-      "packageUri": "lib/",
-      "languageVersion": "1.11"
-    },
-    {
       "name": "source_map_stack_trace",
       "rootUri": "file:///C:/Users/rando/Programming/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/source_map_stack_trace-2.0.0",
       "packageUri": "lib/",
@@ -290,12 +278,6 @@
       "languageVersion": "2.0"
     },
     {
-      "name": "vector_math",
-      "rootUri": "file:///C:/Users/rando/Programming/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.0.8",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
       "name": "vm_service",
       "rootUri": "file:///C:/Users/rando/Programming/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/vm_service-4.0.2",
       "packageUri": "lib/",
@@ -332,7 +314,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-05-06T07:58:26.261957Z",
+  "generated": "2020-05-06T22:22:14.470969Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

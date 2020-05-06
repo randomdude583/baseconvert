@@ -1,0 +1,19 @@
+name: example
+description: Example for baseconvert library.
+homepage: https://hiddenquarter.com
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  collection: ^1.14.12
+  baseconvert: ^1.0.1
+
+
+dependency_overrides:
+  baseconvert:
+    path: ../../baseconvert
+
+
+
+

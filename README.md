@@ -17,7 +17,8 @@ This repository is a port of [Joshua Deakin's](https://github.com/squdle "github
 - - - -
 
 ## Usage
-```// base(number, {inputBase=10, outputBase=10, maxDepth=10, string=false, recurring=true})
+```
+// base(number, {inBase=10, outBase=10, maxDepth=10, string=false, recurring=true})
 
 base([15, 15, 0, ".", 8], inBase: 16, outBase: 10);
 --> [4, 0, 8, 0, '.', 5]
@@ -72,11 +73,11 @@ base("0.2", inBase: 10, outBase: 8, maxDepth=1);
 ## Callable BaseConverter
 An object can also be created. This is useful for when several numbers need to be converted.
 ```
-BaseConverter b = BaseConverter(inputBase: 16, outputBase: 8);
-b("FF");
+BaseConverter b = BaseConverter(inBase: 16, outBase: 8);
+b.convert("FF");
 --> [3, 7, 7]
-b([15, 15]);
+b.convert([15, 15]);
 --> [3, 7, 7]
-b("FF") == b([15,15]);
+b.convert("FF") == b([15,15]);
 --> true
 ```

@@ -2,15 +2,14 @@ name: baseconvert
 description: Convert any rational number from any (positive integer)
   base to any (positive integer) base. Output numbers as List or String.
 version: 1.0.1
-homepage: http://hiddenquarter.com
+homepage: https://hiddenquarter.com
 repository: https://github.com/randomdude583/baseconvert
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
+
 
 dev_dependencies:
   test:

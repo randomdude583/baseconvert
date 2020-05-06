@@ -47,7 +47,7 @@ String representAsString(List list) {
   return output;
 }
 
-int _digit(int decimal, int digit, [int inputBase = 10]) {
+int _digit(int decimal, int digit, [int inBase = 10]) {
   /*
   Find the value of an integer at a specific digit when represented in a
   particular base.
@@ -63,9 +63,9 @@ int _digit(int decimal, int digit, [int inputBase = 10]) {
     return 0;
   }
   if (digit != 0) {
-    return (decimal ~/ pow(inputBase, digit)) % inputBase;
+    return (decimal ~/ pow(inBase, digit)) % inBase;
   } else {
-    return decimal % inputBase;
+    return decimal % inBase;
   }
 }
 
@@ -103,27 +103,27 @@ List<List> _integerFractionalParts(List number) {
   return ([integerPart, fractionalPart]);
 }
 
-List _fromBase10(int decimal, [outputBase = 10]) {
+List _fromBase10(int decimal, [outBase = 10]) {
   /*
   Converts a decimal integer to a specific base.
   Args:
       decimal(int) A base 10 number.
-      outputBase(int) base to convert to.
+      outBase(int) base to convert to.
   Returns:
       A list of digits in the specified base.*/
 
   if (decimal <= 0) {
     return [0];
   }
-  if (outputBase == 1) {
-    return List.generate(outputBase, (number) => 1);
+  if (outBase == 1) {
+    return List.generate(outBase, (number) => 1);
   }
-  int length = _digits(decimal, outputBase);
-  List converted = List.generate(length, (i) => _digit(decimal, i, outputBase));
+  int length = _digits(decimal, outBase);
+  List converted = List.generate(length, (i) => _digit(decimal, i, outBase));
   return converted.reversed.toList();
 }
 
-int _toBase10(List n, int inputBase) {
+int _toBase10(List n, int inBase) {
   /*
   Converts an integer in any base into it's decimal representation.
   Args:
@@ -134,12 +134,12 @@ int _toBase10(List n, int inputBase) {
 
   int sum = 0;
   for (int i = 0; i < n.length; i++) {
-    sum += n.reversed.elementAt(i) * pow(inputBase, i);
+    sum += n.reversed.elementAt(i) * pow(inBase, i);
   }
   return sum;
 }
 
-List _integerBase(List number, [int inputBase = 10, int outputBase = 10]) {
+List _integerBase(List number, [int inBase = 10, int outBase = 10]) {
   /*
   Converts the integer part of a number from one base to another.
   Args:
@@ -151,11 +151,11 @@ List _integerBase(List number, [int inputBase = 10, int outputBase = 10]) {
   Returns:
       A List of digits.*/
 
-  return _fromBase10(_toBase10(number, inputBase), outputBase);
+  return _fromBase10(_toBase10(number, inBase), outBase);
 }
 
 List _fractionalBase(List fractionalPart,
-    [int inputBase = 10, int outputBase = 10, int maxDepth = 100]) {
+    [int inBase = 10, int outBase = 10, int maxDepth = 100]) {
   /*
   Convert the fractional part of a number from any base to any base.
   Args:
@@ -172,15 +172,15 @@ List _fractionalBase(List fractionalPart,
   BigInt numerator = BigInt.from(0);
   for (int i = 0; i < fractionalPart.length; i++) {
     numerator = BigInt.from(numerator.toInt() +
-        (fractionalPart[i] * pow(inputBase, fractionalDigits - (i + 1))));
+        (fractionalPart[i] * pow(inBase, fractionalDigits - (i + 1))));
   }
-  BigInt denominator = BigInt.from(pow(inputBase, fractionalDigits));
+  BigInt denominator = BigInt.from(pow(inBase, fractionalDigits));
   List digits = [];
   for (int i = 1; i < maxDepth + 1; i++) {
-    numerator *= BigInt.from(pow(outputBase, i));
+    numerator *= BigInt.from(pow(outBase, i));
     int digit = (numerator ~/ denominator).toInt();
     numerator -= BigInt.from(digit) * denominator;
-    denominator *= BigInt.from(pow(outputBase, i));
+    denominator *= BigInt.from(pow(outBase, i));
     digits.add(digit);
 
     BigInt greatestCommonDivisor = numerator.gcd(denominator);
@@ -365,7 +365,7 @@ List _expandRecurring(List number, {int repeat = 5}) {
   return number;
 }
 
-bool _checkValid(List number, [int inputBase = 10]) {
+bool _checkValid(List number, [int inBase = 10]) {
   /*
   Checks if there is an invalid digit in the input number.
   Args:
@@ -379,8 +379,8 @@ bool _checkValid(List number, [int inputBase = 10]) {
   for (dynamic n in number) {
     if ([".", "[", "]"].contains(n)) {
       continue;
-    } else if (n >= inputBase) {
-      if (n == 1 && inputBase == 1) {
+    } else if (n >= inBase) {
+      if (n == 1 && inBase == 1) {
         continue;
       } else {
         return false;
@@ -391,8 +391,8 @@ bool _checkValid(List number, [int inputBase = 10]) {
 }
 
 base(dynamic number,
-    {int inputBase = 10,
-    int outputBase = 10,
+    {int inBase = 10,
+    int outBase = 10,
     int maxDepth = 10,
     bool string = false,
     bool recurring = true}) {
@@ -400,8 +400,8 @@ base(dynamic number,
   Converts a number from any base to any another.
   Args:
       number(List|String|int): The number to convert.
-      inputBase(int): The base to convert from (default 10).
-      outputBase(int): The base to convert to (default 10).
+      inBase(int): The base to convert from (default 10).
+      outBase(int): The base to convert to (default 10).
       maxDepth(int): The maximum number of fractional digits (default 10).
       string(bool): If true output will be in String representation,
           if false output will be in List representation (default false).
@@ -414,7 +414,7 @@ base(dynamic number,
       If the string flag is set to true,
       a String representation will be used instead.
   Raises:
-      ValueError if a digit value is too high for the inputBase.*/
+      ValueError if a digit value is too high for the inBase.*/
 
   //Convert number to List representation
   if (number is int || number is double) {
@@ -424,11 +424,11 @@ base(dynamic number,
     number = representAsList(number);
   }
   //Check that the number is valid for the input base
-  if (!_checkValid(number, inputBase)) {
+  if (!_checkValid(number, inBase)) {
     throw Exception("Invalid!");
   }
   //Deal with base-1 special case
-  if (inputBase == 1) {
+  if (inBase == 1) {
     number = List.generate(number.length, (number) => 1);
   }
   //Expand any recurring digits
@@ -438,9 +438,9 @@ base(dynamic number,
     int radixPoint = number.indexOf(".");
     List integerPart = number.sublist(0, radixPoint);
     List fractionalPart = number.sublist(radixPoint);
-    integerPart = _integerBase(integerPart, inputBase, outputBase);
+    integerPart = _integerBase(integerPart, inBase, outBase);
     fractionalPart =
-        _fractionalBase(fractionalPart, inputBase, outputBase, maxDepth);
+        _fractionalBase(fractionalPart, inBase, outBase, maxDepth);
 
     number = integerPart + fractionalPart;
     number = _truncate(number);
@@ -448,7 +448,7 @@ base(dynamic number,
 
   //Convert an integer number
   else {
-    number = _integerBase(number, inputBase, outputBase);
+    number = _integerBase(number, inBase, outBase);
   }
 
   if (recurring) {
@@ -464,23 +464,23 @@ base(dynamic number,
 }
 
 class BaseConverter {
-  final int inputBase;
-  final int outputBase;
+  final int inBase;
+  final int outBase;
   final int maxDepth;
   final bool string;
   final bool recurring;
 
   BaseConverter(
-      {this.inputBase = 10,
-      this.outputBase = 10,
+      {this.inBase = 10,
+      this.outBase = 10,
       this.maxDepth = 10,
       this.string = false,
       this.recurring = true});
 
   convert(dynamic number) {
     return base(number,
-        inputBase: inputBase,
-        outputBase: outputBase,
+        inBase: inBase,
+        outBase: outBase,
         maxDepth: maxDepth,
         string: string,
         recurring: recurring);
