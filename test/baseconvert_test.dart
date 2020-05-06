@@ -1,9 +1,20 @@
-import 'dart:math';
-
+//MIT License (MIT) Copyright (c) 2020 Alex Collette
+//https://github.com/randomdude583/baseconvert
+////////////////////////////////////////////////////////////////////////////////
 import 'package:test/test.dart';
+
 import 'package:baseconvert/baseconvert.dart';
 
 void main() {
+
+  List B2 = [1,0,1,0,1,0,0];
+  List B3 = [1,0,0,1,0];
+  List B4 = [1,1,1,0];
+  List B5 = [3,1,4];
+  List B6 = [2,2,0];
+  List B7 = [1,5,0];
+  List B8 = [1,2,4];
+  List B9 = [1,0,3];
   
   group('digit()', (){
     test('201_0', (){
@@ -22,6 +33,7 @@ void main() {
       expect(digit(123456789123456789, 0, 16), 5);
     });
   });
+
 
   group('digits()', (){
     test('255', (){
@@ -75,6 +87,7 @@ void main() {
       expect(toBase10([8,1], 16), 129);
     });
   });
+
 
   group('integerBase()',(){
     test('[2, 5, 5]', (){
@@ -133,9 +146,6 @@ void main() {
   });
 
 
-
-  
-  
   group('checkValid()', (){
     test("[1,9,6,'.',5,1,6]_12", (){
       expect(checkValid([1,9,6,'.',5,1,6], 12), true);
@@ -145,11 +155,19 @@ void main() {
     });
   });
 
-
+  
   group('base()', (){
-    test("[1,9,6,'.',5,1,6], 17, 20", (){
-      expect(base([1,9,6,'.',5,1,6], inputBase: 17, outputBase: 20),
-          [1, 2, 8, '.', 5, 19, 10, 7, 17, 2, 13, 13, 1, 8]);
+    test("B2_B3", (){
+      expect(base(B2, inputBase: 2, outputBase: 3), B3);
+    });
+    test("B3_B4", (){
+      expect(base(B3, inputBase: 3, outputBase: 4), B4);
+    });
+    test("B4_B5", (){
+      expect(base(B4, inputBase: 4, outputBase: 5), B5);
+    });
+    test("B5_B6", (){
+      expect(base(B5, inputBase: 5, outputBase: 6), B6);
     });
   });
 
@@ -162,82 +180,6 @@ void main() {
       });
     });
   });
-
-
-
-
-
-
-
-
-
-
-
-/*
-  group('base', () {
-    test('base_numberWrongType_exception', () {
-      expect(() => baseconvert(0, 2, 3, string: true), throwsException);
-    });
-
-    test('base_base2IN/base3-10OUT', () {
-      expect(baseconvert("01010100", 2, 3, string: true), "10010");
-      expect(baseconvert("01010100", 2, 4, string: true), "1110");
-      expect(baseconvert("01010100", 2, 5, string: true), "314");
-      expect(baseconvert("01010100", 2, 6, string: true), "220");
-      expect(baseconvert("01010100", 2, 7, string: true), "150");
-      expect(baseconvert("01010100", 2, 8, string: true), "124");
-      expect(baseconvert("01010100", 2, 9, string: true), "103");
-      expect(baseconvert("01010100", 2, 10, string: true), "84");
-    });
-
-    test('base_base3IN/base2-10OUT', () {
-      expect(baseconvert("0012001", 3, 2, string: true), "10001000");
-      expect(baseconvert("0012001", 3, 4, string: true), "2020");
-      expect(baseconvert("0012001", 3, 5, string: true), "1021");
-      expect(baseconvert("0012001", 3, 6, string: true), "344");
-      expect(baseconvert("0012001", 3, 7, string: true), "253");
-      expect(baseconvert("0012001", 3, 8, string: true), "210");
-      expect(baseconvert("0012001", 3, 9, string: true), "161");
-      expect(baseconvert("0012001", 3, 10, string: true), "136");
-    });
-
-    test('base_base10IN/base10OUT', () {
-      expect(baseconvert("1945", 10, 10, string: true), "1945");
-    });
-
-    test('base_base2IN/base10OUT', () {
-      expect(baseconvert("11110011001", 2, 10, string: true), "1945");
-    });
-
-    test('base_StringIN/StringOUT', () {
-      expect(baseconvert("01010100", 2, 3, string: true), "10010");
-    });
-    test('base_List<int>IN/StringOUT', () {
-      expect(baseconvert([0, 1, 0, 1, 0, 1, 0, 0], 2, 3, string: true), "10010");
-    });
-    test('base_StringIN/List<int>OUT', () {
-      expect(baseconvert("01010100", 2, 3, string: false), [1, 0, 0, 1, 0]);
-    });
-    test('base_list<int>IN/List<int>OUT', () {
-      expect(baseconvert(['F', 'F', 0], 16, 10, string: false), [4, 0, 8, 0]);
-    });
-  });
-
-
-  group('baseconvert', (){
-    test('baseconvert_create_noExceptions', (){
-      BaseConverter b = BaseConverter(2,10);
-    });
-
-    test('baseconvert_base2IN/base4OUT', (){
-      BaseConverter b = BaseConverter(2,4, string: true);
-      expect(b.convert("01010100"), "1110");
-    });
-  });*/
-
-
-
-
 
 
 

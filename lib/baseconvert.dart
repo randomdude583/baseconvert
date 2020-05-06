@@ -1,3 +1,6 @@
+//MIT License (MIT) Copyright (c) 2020 Alex Collette
+//https://github.com/randomdude583/baseconvert
+////////////////////////////////////////////////////////////////////////////////
 library baseconvert;
 
 import 'dart:math';
