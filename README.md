@@ -12,7 +12,7 @@ MIT License (MIT) Copyright (c) 2020 Alex Collette
 [Github](https://github.com/randomdude583/baseconvert "GitHub Repo")
 
 - - - - 
-This repository is a port of the python baseconvert library by [Joshua Deakin](https://github.com/squdle "github/squdle")
+This repository is a port of [Joshua Deakin's](https://github.com/squdle "github/squdle") baseconvert library for Python.
 - His original repository can be found [Here](https://github.com/squdle/baseconvert "squdle/baseconvert")
 - - - -
 
