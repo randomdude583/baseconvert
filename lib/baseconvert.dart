@@ -116,7 +116,7 @@ List _fromBase10(int decimal, [outBase = 10]) {
     return [0];
   }
   if (outBase == 1) {
-    return List.generate(outBase, (number) => 1);
+    return List.generate(decimal, (i) => 1);
   }
   int length = _digits(decimal, outBase);
   List converted = List.generate(length, (i) => _digit(decimal, i, outBase));
@@ -416,6 +416,14 @@ base(dynamic number,
   Raises:
       ValueError if a digit value is too high for the inBase.*/
 
+  //Check for invalid bases
+  if(inBase < 1){
+    throw Exception("Invalid inBase");
+  }
+  if(outBase < 1){
+    throw Exception();
+  }
+
   //Convert number to List representation
   if (number is int || number is double) {
     number = number.toString();
@@ -427,9 +435,15 @@ base(dynamic number,
   if (!_checkValid(number, inBase)) {
     throw Exception("Invalid!");
   }
-  //Deal with base-1 special case
+  //Deal with base 1 special case
   if (inBase == 1) {
-    number = List.generate(number.length, (number) => 1);
+    int count = 0;
+    for(dynamic item in number){
+      if(item == 1){
+        count++;
+      }
+    }
+    number = List.generate(count, (number) => 1);
   }
   //Expand any recurring digits
   number = _expandRecurring(number, repeat: 5);
@@ -475,7 +489,15 @@ class BaseConverter {
       this.outBase = 10,
       this.maxDepth = 10,
       this.string = false,
-      this.recurring = true});
+      this.recurring = true}){
+    //Check for invalid bases
+    if(inBase < 1){
+      throw Exception("Invalid inBase");
+    }
+    if(outBase < 1){
+      throw Exception();
+    }
+  }
 
   convert(dynamic number) {
     return base(number,

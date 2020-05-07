@@ -6,6 +6,10 @@ import 'package:test/test.dart';
 import 'package:baseconvert/baseconvert.dart';
 
 void main() {
+  List B1 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   List B2 = [1, 0, 1, 0, 1, 0, 0];
   List B3 = [1, 0, 0, 1, 0];
   List B4 = [1, 1, 1, 0];
@@ -13,7 +17,7 @@ void main() {
   List B6 = [2, 2, 0];
 
   group("representAsList", () {
-    test("", () {
+    test("868.0F", () {
       expect(representAsList("868.0F"), [8, 6, 8, '.', 0, 15]);
     });
   });
@@ -24,26 +28,60 @@ void main() {
     });
   });
 
+
   group('base()', () {
-    test("B2_B3", () {
-      expect(base(B2, inBase: 2, outBase: 3), B3);
+    group("normal", (){
+      test("B1_B2", (){
+        expect(base(B1, inBase: 1, outBase: 2), B2);
+      });
+      test("B2_B1", (){
+        expect(base(B2, inBase: 2, outBase: 1), B1);
+      });
+      test("B2_B2", (){
+        expect(base(B2, inBase: 2, outBase: 2), B2);
+      });
+      test("B2_B3", (){
+        expect(base(B2, inBase: 2, outBase: 3), B3);
+      });
+      test("noOptionalParams", (){
+        expect(base(B5), B5);
+      });
     });
-    test("B3_B4", () {
-      expect(base(B3, inBase: 3, outBase: 4), B4);
+
+    group("exception", (){
+      test("invalidInBase", (){
+        expect(() => base(B5, inBase: -1, outBase: 3), throwsException);
+      });
+      test("invalidOutBase", (){
+        expect(() => base(B5, inBase: 5, outBase: 0),  throwsException);
+      });
+      test("valueMismatch", (){
+        expect(() => base(B5, inBase: 2, outBase: 10), throwsException);
+      });
     });
-    test("B4_B5", () {
-      expect(base(B4, inBase: 4, outBase: 5), B5);
-    });
-    test("B5_B6", () {
-      expect(base(B5, inBase: 5, outBase: 6), B6);
-    });
+
+
+
   });
 
   group('BaseConverter()', () {
-    group("2_4", () {
+    group("expect", () {
       BaseConverter b = new BaseConverter(inBase: 2, outBase: 4);
-      test("", () {
+      test("2_4", () {
         expect(b.convert([0, 1, 0, 1, 0, 1, 0, 0]), [1, 1, 1, 0]);
+      });
+    });
+
+    group("exception", (){
+      test("invalidInBase", (){
+        expect((){BaseConverter b = new BaseConverter(inBase: -1, outBase: 3);}, throwsException);
+      });
+      test("invalidOutBase", (){
+        expect((){BaseConverter b = new BaseConverter(inBase: 2, outBase: -1);}, throwsException);
+      });
+      test("valueMismatch", (){
+        BaseConverter b = new BaseConverter(inBase: 2, outBase: 4);
+        expect(() => b.convert("FF0"), throwsException);
       });
     });
   });
