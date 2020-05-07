@@ -1,4 +1,8 @@
+//MIT License (MIT) Copyright (c) 2020 Alex Collette
+//https://github.com/randomdude583/baseconvert
+////////////////////////////////////////////////////////////////////////////////
 import 'package:collection/collection.dart';
+
 import 'package:baseconvert/baseconvert.dart';
 
 
