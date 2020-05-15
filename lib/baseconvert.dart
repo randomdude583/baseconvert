@@ -417,10 +417,10 @@ base(dynamic number,
       ValueError if a digit value is too high for the inBase.*/
 
   //Check for invalid bases
-  if(inBase < 1){
+  if (inBase < 1) {
     throw Exception("Invalid inBase");
   }
-  if(outBase < 1){
+  if (outBase < 1) {
     throw Exception();
   }
 
@@ -438,8 +438,8 @@ base(dynamic number,
   //Deal with base 1 special case
   if (inBase == 1) {
     int count = 0;
-    for(dynamic item in number){
-      if(item == 1){
+    for (dynamic item in number) {
+      if (item == 1) {
         count++;
       }
     }
@@ -453,8 +453,7 @@ base(dynamic number,
     List integerPart = number.sublist(0, radixPoint);
     List fractionalPart = number.sublist(radixPoint);
     integerPart = _integerBase(integerPart, inBase, outBase);
-    fractionalPart =
-        _fractionalBase(fractionalPart, inBase, outBase, maxDepth);
+    fractionalPart = _fractionalBase(fractionalPart, inBase, outBase, maxDepth);
 
     number = integerPart + fractionalPart;
     number = _truncate(number);
@@ -489,12 +488,12 @@ class BaseConverter {
       this.outBase = 10,
       this.maxDepth = 10,
       this.string = false,
-      this.recurring = true}){
+      this.recurring = true}) {
     //Check for invalid bases
-    if(inBase < 1){
+    if (inBase < 1) {
       throw Exception("Invalid inBase");
     }
-    if(outBase < 1){
+    if (outBase < 1) {
       throw Exception();
     }
   }
